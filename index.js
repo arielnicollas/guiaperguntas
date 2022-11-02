@@ -2,6 +2,7 @@ const express = require("express")
 const app = express();
 const bodyparser = require("body-parser")
 const Pergunta = require("./database/Pergunta");
+const Resposta = require("./database/Resposta");
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -55,10 +56,23 @@ app.get("/pergunta/:id", (req,res) => {
         where: {id: id}
     }).then(pergunta => {
         if(pergunta != undefined){
-            res.render("pergunta");
+            res.render("pergunta", {
+                pergunta: pergunta
+            });
         }else{
             res.redirect("/")
         }
+    })
+})
+
+app.post("/responder", (req,res) => {
+    var corpo = req.body.corpo
+    var perguntaId = req.body.pergunta
+    Resposta.create({
+        corpo: corpo,
+        perguntaId: perguntaId
+    }).then(() => {
+        res.redirect("/pergunta/"+perguntaId)
     })
 })
 
