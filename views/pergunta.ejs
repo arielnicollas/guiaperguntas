@@ -16,9 +16,16 @@
                     <label for="">Resposta:</label>
                     <textarea plaeceholder="Digite sua resposta" class="form-control" name="corpo"></textarea>
                     <br>
-                    <input type="hidden" value="<%= pergunta.id %>">
+                    <input type="hidden" name="pergunta" value="<%= pergunta.id %>">
                     <button type="submit" class="btn btn-dark">Responder</button>
                 </form>
+                <hr>
+                <h3>Respostas</h3>
+                <hr>
+                <% respostas.forEach(resposta => {%>
+                    <%= resposta.body %>
+                <% }) %>
+                
             </div>
     </body>
     <%- include('partials/footer.ejs') %>
